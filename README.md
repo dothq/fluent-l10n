@@ -1,15 +1,15 @@
 # fluent-l10n
 
-Lightweight Fluent (.ftl) loader. 🪶
+🪶 Lightweight (~15kb) loader for Fluent (.ftl) 
 
 ## Installation
 
 ```bash
 # NPM
-npm i @dothq/l10n
+npm i @dothq/fluent
 
 # Yarn
-yarn add @dothq/l10n
+yarn add @dothq/fluent
 ```
 
 ## Usage
