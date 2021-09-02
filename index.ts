@@ -1,12 +1,12 @@
 import { FluentBundle, FluentResource } from "@fluent/bundle";
-import { readFileSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 import { resolve } from "path";
 
 interface L10nArgs {
     availableLocales: string[],
     defaultLocale: string,
 
-    localesDirectory: string,
+    localesDirectory?: string,
 
     filter: (...args: any[]) => string
     loader?: ({ locales, defaultLocale, localesDirectory }: any) => Promise<Record<string, string>> | Record<string, string>
@@ -14,12 +14,17 @@ interface L10nArgs {
 
 export class L10n {
     public languages: { [key: string]: FluentBundle } = {};
-
+    public defaultLocale: string = "";
     public filter: (...args: any[]) => string;
 
     public format(id: string, ctx?: Record<string, any>) {
         const language = this.filter();
-        const bundle = this.languages[language];
+        let bundle = this.languages[language];
+
+        // Check if the bundle exists first, if it doesn't just fallback to the default language.
+        if(!bundle) bundle = this.languages[this.defaultLocale];
+        // Last resort, just return the ID of the string.
+        if(!bundle) return id;
 
         const raw = bundle.getMessage(id);
         
@@ -49,14 +54,16 @@ export class L10n {
                 let data: any = {};
 
                 for await (const locale of args.availableLocales) {
-                    const path = resolve(args.localesDirectory, `${locale}.ftl`);
+                    const path = resolve(args.localesDirectory || __dirname, `${locale}.ftl`);
         
-                    const ftl = readFileSync(
-                        path,
-                        { encoding: "utf-8" }
-                    );
-
-                    data[locale] = ftl;
+                    if(existsSync(path)) {
+                        const ftl = readFileSync(
+                            path,
+                            { encoding: "utf-8" }
+                        );
+    
+                        data[locale] = ftl;
+                    }
                 }
 
                 res(data);
@@ -67,10 +74,10 @@ export class L10n {
     constructor(args: L10nArgs) {
         if(!args.availableLocales || !args.availableLocales.length) throw new Error(`You need some locales in availableLocales.`);
         if(!args.availableLocales.includes(args.defaultLocale)) throw new Error("Default locale isn't in available locales.");
-        if(!args.localesDirectory) throw new Error(`Unable to find any locales. Set the localesDirectory parameter.`);
         if(!args.filter) throw new Error(`No filter was set.`);
 
         this.filter = args.filter;
+        this.defaultLocale = args.defaultLocale;
 
         this.load({ ...args }).then((data: any) => {
             for(const [key, value] of Object.entries(data)) {
