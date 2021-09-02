@@ -9,7 +9,7 @@ interface L10nArgs {
     localesDirectory?: string,
 
     filter: (...args: any[]) => string
-    loader?: ({ locales, defaultLocale, localesDirectory }: any) => Promise<Record<string, string>> | Record<string, string>
+    loader?: ({ locales, defaultLocale, localesDirectory }: Partial<any>) => Promise<Record<string, string>> | Record<string, string>
 }
 
 export class L10n {
