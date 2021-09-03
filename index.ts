@@ -1,6 +1,4 @@
 import { FluentBundle, FluentResource } from "@fluent/bundle";
-import { existsSync, readFileSync } from "fs";
-import { resolve } from "path";
 
 interface L10nArgs {
     availableLocales: string[],
@@ -51,6 +49,9 @@ export class L10n {
 
                 res(data);
             } else {
+                const { existsSync, readFileSync } = await import("fs");
+                const { resolve } = await import("path");
+
                 let data: any = {};
 
                 for await (const locale of args.availableLocales) {

@@ -4,6 +4,6 @@
 
 # Strings
 
-hello- world = Hello World!
+hello-world = Hello World!
 vars-test = Hello, { $name }! Welcome to World!
 globals-test = Hello, { $name }! Welcome to { -app-brand-name }!
