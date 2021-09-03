@@ -90,8 +90,8 @@ class L10n {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((res) => __awaiter(this, void 0, void 0, function* () {
                 var e_1, _a;
-                if (args.loader) {
-                    const data = yield args.loader({
+                if (this.loader) {
+                    const data = yield this.loader({
                         locales: args.availableLocales,
                         defaultLocale: args.defaultLocale,
                         localesDirectory: args.localesDirectory

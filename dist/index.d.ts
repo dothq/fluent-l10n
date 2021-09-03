@@ -4,11 +4,6 @@ interface L10nArgs {
     defaultLocale: string;
     localesDirectory?: string;
     filter: (...args: any[]) => string;
-    loader?: (args: {
-        locales?: string[];
-        defaultLocale?: string;
-        localesDirectory?: string;
-    }) => Promise<Record<string, string>> | Record<string, string>;
 }
 export declare class L10n {
     languages: {
