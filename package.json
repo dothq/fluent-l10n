@@ -1,6 +1,6 @@
 {
   "name": "@dothq/fluent",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "dist/index.js",
   "repository": "https://github.com/dothq/fluent-l10n.git",
   "author": "EnderDev <42723993+EnderDev@users.noreply.github.com>",
