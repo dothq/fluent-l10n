@@ -7,7 +7,6 @@ interface L10nArgs {
     localesDirectory?: string,
 
     filter: (...args: any[]) => string
-    loader?: (args: { locales?: string[], defaultLocale?: string, localesDirectory?: string }) => Promise<Record<string, string>> | Record<string, string>
 }
 
 export class L10n {
@@ -40,8 +39,8 @@ export class L10n {
 
     private async load(args: L10nArgs) {
         return new Promise(async (res) => {
-            if(args.loader) {
-                const data = await args.loader({ 
+            if((this as any).loader) {
+                const data = await (this as any).loader({ 
                     locales: args.availableLocales, 
                     defaultLocale: args.defaultLocale, 
                     localesDirectory: args.localesDirectory 
