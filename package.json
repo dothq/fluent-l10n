@@ -6,7 +6,8 @@
   "author": "EnderDev <42723993+EnderDev@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "prepublish": "yarn build"
   },
   "dependencies": {
     "@fluent/bundle": "^0.16.1"
